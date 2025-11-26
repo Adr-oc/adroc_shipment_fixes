@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Aduanas de Guatemala -->
+        <record id="aduana_st" model="mrdc.aduana">
+            <field name="code">ST</field>
+            <field name="name">Aduana Santo Tomás de Castilla</field>
+        </record>
+
+        <record id="aduana_pq" model="mrdc.aduana">
+            <field name="code">PQ</field>
+            <field name="name">Aduana Puerto Quetzal</field>
+        </record>
+
+        <record id="aduana_pb" model="mrdc.aduana">
+            <field name="code">PB</field>
+            <field name="name">Aduana Puerto Barrios</field>
+        </record>
+
+        <record id="aduana_tu" model="mrdc.aduana">
+            <field name="code">TU</field>
+            <field name="name">Aduana Tecún Umán</field>
+        </record>
+
+        <record id="aduana_ec" model="mrdc.aduana">
+            <field name="code">EC</field>
+            <field name="name">Aduana El Carmen</field>
+        </record>
+
+        <record id="aduana_lm" model="mrdc.aduana">
+            <field name="code">LM</field>
+            <field name="name">Aduana La Mesilla</field>
+        </record>
+
+        <record id="aduana_mm" model="mrdc.aduana">
+            <field name="code">MM</field>
+            <field name="name">Aduana Melchor de Mencos</field>
+        </record>
+
+        <record id="aduana_ef" model="mrdc.aduana">
+            <field name="code">EF</field>
+            <field name="name">Aduana El Florido</field>
+        </record>
+
+        <record id="aduana_vh" model="mrdc.aduana">
+            <field name="code">VH</field>
+            <field name="name">Aduana de Vehículos</field>
+        </record>
+
+        <record id="aduana_cg" model="mrdc.aduana">
+            <field name="code">CG</field>
+            <field name="name">Aduana Central de Guatemala</field>
+        </record>
+
+        <record id="aduana_ch" model="mrdc.aduana">
+            <field name="code">CH</field>
+            <field name="name">Aduana Champerico</field>
+        </record>
+
+        <record id="aduana_pa" model="mrdc.aduana">
+            <field name="code">PA</field>
+            <field name="name">Aduana Pedro de Alvarado</field>
+        </record>
+
+        <record id="aduana_vn" model="mrdc.aduana">
+            <field name="code">VN</field>
+            <field name="name">Aduana Valle Nuevo</field>
+        </record>
+
+        <record id="aduana_sc" model="mrdc.aduana">
+            <field name="code">SC</field>
+            <field name="name">Aduana San Cristóbal</field>
+        </record>
+
+        <record id="aduana_ac" model="mrdc.aduana">
+            <field name="code">AC</field>
+            <field name="name">Aduana Agua Caliente</field>
+        </record>
+
+        <record id="aduana_le" model="mrdc.aduana">
+            <field name="code">LE</field>
+            <field name="name">Aduana La Ermita</field>
+        </record>
+
+        <record id="aduana_cb" model="mrdc.aduana">
+            <field name="code">CB</field>
+            <field name="name">Aduana El Ceibo</field>
+        </record>
+
+        <record id="aduana_se" model="mrdc.aduana">
+            <field name="code">SE</field>
+            <field name="name">Aduana Tikal/Santa Elena</field>
+        </record>
+
+        <record id="aduana_ca" model="mrdc.aduana">
+            <field name="code">CA</field>
+            <field name="name">Aduana Central de Aviación</field>
+        </record>
+
+        <record id="aduana_ea" model="mrdc.aduana">
+            <field name="code">EA</field>
+            <field name="name">Aduana Express Aéreo</field>
+        </record>
+
+        <record id="aduana_fp" model="mrdc.aduana">
+            <field name="code">FP</field>
+            <field name="name">Aduana Fardos Postales</field>
+        </record>
+
+        <record id="aduana_g1" model="mrdc.aduana">
+            <field name="code">G1</field>
+            <field name="name">Aduana Almacenadora Integrada</field>
+        </record>
+
+        <record id="aduana_g2" model="mrdc.aduana">
+            <field name="code">G2</field>
+            <field name="name">Aduana Alminter</field>
+        </record>
+
+        <record id="aduana_g3" model="mrdc.aduana">
+            <field name="code">G3</field>
+            <field name="name">Aduana Alpasa</field>
+        </record>
+
+        <record id="aduana_g4" model="mrdc.aduana">
+            <field name="code">G4</field>
+            <field name="name">Aduana Alsersa</field>
+        </record>
+
+        <record id="aduana_g5" model="mrdc.aduana">
+            <field name="code">G5</field>
+            <field name="name">Aduana Cealsa</field>
+        </record>
+
+        <record id="aduana_g6" model="mrdc.aduana">
+            <field name="code">G6</field>
+            <field name="name">Aduana Almaguate</field>
+        </record>
+
+        <record id="aduana_g7" model="mrdc.aduana">
+            <field name="code">G7</field>
+            <field name="name">Aduana Alcorsa</field>
+        </record>
+
+        <record id="aduana_g8" model="mrdc.aduana">
+            <field name="code">G8</field>
+            <field name="name">Aduana Centralsa</field>
+        </record>
+
+        <record id="aduana_tm" model="mrdc.aduana">
+            <field name="code">TM</field>
+            <field name="name">Aduana Tecún Umán Intermodal</field>
+        </record>
+
+        <record id="aduana_ag1" model="mrdc.aduana">
+            <field name="code">AG1</field>
+            <field name="name">Almacenadora Guatemalteca, S.A. (ALMAGUATE)</field>
+        </record>
+
+        <record id="aduana_ap1" model="mrdc.aduana">
+            <field name="code">AP1</field>
+            <field name="name">Almacenadora del País, S.A. (ALPASA)</field>
+        </record>
+
+        <record id="aduana_as1" model="mrdc.aduana">
+            <field name="code">AS1</field>
+            <field name="name">Almacenes y Servicios, S.A. (ALSERSA)</field>
+        </record>
+
+        <record id="aduana_am1" model="mrdc.aduana">
+            <field name="code">AM1</field>
+            <field name="name">Almacenadora Internacional (ALMINTER)</field>
+        </record>
+
+        <record id="aduana_ai3" model="mrdc.aduana">
+            <field name="code">AI3</field>
+            <field name="name">Almacenes Generales, S.A. (ALGESA)</field>
+        </record>
+
+        <record id="aduana_ce1" model="mrdc.aduana">
+            <field name="code">CE1</field>
+            <field name="name">Central Almacenadora, S.A. (CEALSA)</field>
+        </record>
+
+        <record id="aduana_ai2" model="mrdc.aduana">
+            <field name="code">AI2</field>
+            <field name="name">Almacenadora Integrada, S.A.</field>
+        </record>
+
+        <record id="aduana_at1" model="mrdc.aduana">
+            <field name="code">AT1</field>
+            <field name="name">Almacenadora Tecún (ALMATECUN)</field>
+        </record>
+
+        <record id="aduana_ca1" model="mrdc.aduana">
+            <field name="code">CA1</field>
+            <field name="name">Centroamericana de Almacenes, S.A. (CENTRALSA)</field>
+        </record>
+
+        <record id="aduana_al1" model="mrdc.aduana">
+            <field name="code">AL1</field>
+            <field name="name">Almacenadora Corporativa, S.A. (ALCORSA)</field>
+        </record>
+
+        <record id="aduana_ch1" model="mrdc.aduana">
+            <field name="code">CH1</field>
+            <field name="name">Crédito Hipotecario Nacional (Almacén Fiscal)</field>
+        </record>
+
+        <record id="aduana_gc1" model="mrdc.aduana">
+            <field name="code">GC1</field>
+            <field name="name">Grupo CLC, Sociedad Anónima</field>
+        </record>
+
+        <record id="aduana_de1" model="mrdc.aduana">
+            <field name="code">DE1</field>
+            <field name="name">Distribuidora Electrónica, S.A.</field>
+        </record>
+
+        <record id="aduana_cg1" model="mrdc.aduana">
+            <field name="code">CG1</field>
+            <field name="name">Colgate Palmolive (Centro América), S.A.</field>
+        </record>
+
+        <record id="aduana_ls1" model="mrdc.aduana">
+            <field name="code">LS1</field>
+            <field name="name">Logística de Servicios, S.A.</field>
+        </record>
+
+        <record id="aduana_cm1" model="mrdc.aduana">
+            <field name="code">CM1</field>
+            <field name="name">DHL Global Forwarding (Guatemala), S.A.</field>
+        </record>
+
+        <record id="aduana_av1" model="mrdc.aduana">
+            <field name="code">AV1</field>
+            <field name="name">Productos Avon de Guatemala, S.A.</field>
+        </record>
+
+        <record id="aduana_dw1" model="mrdc.aduana">
+            <field name="code">DW1</field>
+            <field name="name">Duwest Recubrimientos, Sociedad Anónima</field>
+        </record>
+
+        <record id="aduana_im1" model="mrdc.aduana">
+            <field name="code">IM1</field>
+            <field name="name">Inversiones y Proyectos Monterrey, S.A.</field>
+        </record>
+
+        <record id="aduana_cr1" model="mrdc.aduana">
+            <field name="code">CR1</field>
+            <field name="name">CROPA, Sociedad Anónima</field>
+        </record>
+
+        <record id="aduana_1" model="mrdc.aduana">
+            <field name="code">1</field>
+            <field name="name">Zeta Gas de Centroamérica, S.A.</field>
+        </record>
+
+        <record id="aduana_3" model="mrdc.aduana">
+            <field name="code">3</field>
+            <field name="name">Almacenes de Guatemala, S.A.</field>
+        </record>
+
+        <record id="aduana_4" model="mrdc.aduana">
+            <field name="code">4</field>
+            <field name="name">Chiquita Guatemala, S.A.</field>
+        </record>
+
+        <record id="aduana_5" model="mrdc.aduana">
+            <field name="code">5</field>
+            <field name="name">Operadora Mundial, Sociedad Anónima</field>
+        </record>
+
+        <record id="aduana_pn2" model="mrdc.aduana">
+            <field name="code">PN2</field>
+            <field name="name">Sociedad Protectora Niño Anexo Flores, Petén</field>
+        </record>
+
+        <record id="aduana_cf1" model="mrdc.aduana">
+            <field name="code">CF1</field>
+            <field name="name">Centro de Integración Familiar</field>
+        </record>
+
+        <record id="aduana_pn1" model="mrdc.aduana">
+            <field name="code">PN1</field>
+            <field name="name">Sociedad Protectora del Niño (Puerto Libre)</field>
+        </record>
+
+        <record id="aduana_vp1" model="mrdc.aduana">
+            <field name="code">VP1</field>
+            <field name="name">Asociación Señoras Caridad San Vicente Paúl</field>
+        </record>
+
+    </data>
+</odoo>

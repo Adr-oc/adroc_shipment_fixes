@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!-- Template independiente para USD -->
+        <template id="mrdc_external_account_usd_independent_pdf">
+            <t t-call="web.basic_layout">
+                <link rel="stylesheet" href="/mrdc_shipment_base/static/src/css/mrdc_external_account.css" />
+                <t t-foreach="docs" t-as="o">
+                    <!-- Filtrar solo líneas en USD -->
+                    <t t-set="usd_lines" t-value="o.line_ids.filtered(lambda l: l.currency_id.name == 'USD')"/>
+                    <div class="page">
+                        <div class="d-flex">
+                            <div class="col-3">
+                            </div>
+                            <div class="col-6 encabezado">
+                                <div>
+                                    <span t-out="o.name" /> - Dólares
+                                </div>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        <div class="derecha">
+                            <span t-out="o.current_date_format(o.date)" />
+                        </div>
+                        <div class="d-flex datos_cliente">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-8">
+                                <div>
+                                    <span t-out="o.partner_id.name" />
+                                </div>
+                                <div>
+                                    <span t-out="o.partner_id.street" />
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-4">
+                                        <span t-out="o.partner_id.vat" />
+                                    </div>
+                                    <div class="col-4">
+                                        <span t-out="o.shipment_id.customs_declaration_number" />
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                        </div>
+                        <div>
+                            <t t-foreach="usd_lines" t-as="linea">
+                                <div class="d-flex">
+                                    <div class="col-4" t-if="linea.move_id">
+                                        <span t-out="linea.move_id.name" />
+                                    </div>
+                                    <div class="col-4" t-if="not linea.move_id">
+                                        <span t-out="linea.invoice_description" />
+                                    </div>
+                                    <div class="col-4">
+                                        <span t-out="linea.ref" />
+                                    </div>
+                                    <div class="col-1">
+                                        <span t-out="linea.currency_id.name" />
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-out="'{0:,.2f}'.format(1)" />
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-out="'{0:,.2f}'.format(linea.amount)" />
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-10">
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.ref_1" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.ref_3" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.customs_declaration_number" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.bl_awb_number_manual" />
+                                </div>
+                                <div style="margin-left: 70px; margin-top: 20px;">
+                                    <span
+                                        t-out="o.primera_mayuscula(o.num_a_letras(sum(usd_lines.mapped('amount'))))" />
+                                </div>
+                            </div>
+                            <div class="col-2 text-right">
+                                <div style="font-zise: 25px">
+                                    <span t-out="sum(usd_lines.mapped('amount'))"
+                                        t-options="{'widget': 'monetary', 'display_currency': o.env['res.currency'].search([('name', '=', 'USD')], limit=1)}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

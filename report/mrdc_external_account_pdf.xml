@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!-- Template independiente para GTQ -->
+        <template id="mrdc_external_account_gtq_independent_pdf">
+            <t t-call="web.basic_layout">
+                <link rel="stylesheet" href="/mrdc_shipment_base/static/src/css/mrdc_external_account.css" />
+                <t t-foreach="docs" t-as="o">
+                    <!-- Filtrar líneas: GTQ siempre, USD solo si hay tasa de cambio -->
+                    <t t-set="gtq_lines" t-value="o.line_ids.filtered(lambda l: l.currency_id.name == 'GTQ' or (o.gtq_rate and l.currency_id.name == 'USD'))"/>
+                    <!-- Calcular total en GTQ -->
+                    <t t-set="total_gtq_report" t-value="sum((l.amount * o.gtq_rate if l.currency_id.name == 'USD' and o.gtq_rate else l.amount) for l in gtq_lines)"/>
+                    
+                    <div class="page">
+                        <div class="d-flex">
+                            <div class="col-3">
+                            </div>
+                            <div class="col-6 encabezado">
+                                <div>
+                                    <span t-out="o.name" /> - Quetzales
+                                </div>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        <div class="derecha">
+                            <span t-out="o.current_date_format(o.date)" />
+                        </div>
+                        <div class="d-flex datos_cliente">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-8">
+                                <div>
+                                    <span t-out="o.partner_id.name" />
+                                </div>
+                                <div>
+                                    <span t-out="o.partner_id.street" />
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-4">
+                                        <span t-out="o.partner_id.vat" />
+                                    </div>
+                                    <div class="col-4">
+                                        <span t-out="o.shipment_id.customs_declaration_number" />
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                        </div>
+                        <div>
+                            <t t-foreach="gtq_lines" t-as="linea">
+                                <t t-set="line_amount" t-value="linea.amount * o.gtq_rate if linea.currency_id.name == 'USD' and o.gtq_rate else linea.amount"/>
+                                <t t-set="line_currency" t-value="'GTQ' if linea.currency_id.name == 'USD' and o.gtq_rate else linea.currency_id.name"/>
+                                
+                                <div class="d-flex">
+                                    <div class="col-4" t-if="linea.move_id">
+                                        <span t-out="linea.move_id.name" />
+                                    </div>
+                                    <div class="col-4" t-if="not linea.move_id">
+                                        <span t-out="linea.invoice_description" />
+                                    </div>
+                                    <div class="col-4">
+                                        <span t-out="linea.ref" />
+                                    </div>
+                                    <div class="col-1">
+                                        <span t-out="line_currency" />
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-out="'{0:,.2f}'.format(1)" />
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-out="'{0:,.2f}'.format(line_amount)" />
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-10">
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.ref_1" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.ref_3" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.customs_declaration_number" />
+                                </div>
+                                <div style="margin-left: 70px;">
+                                    <span t-out="o.shipment_id.bl_awb_number_manual" />
+                                </div>
+                                <div style="margin-left: 70px; margin-top: 20px;">
+                                    <span
+                                        t-out="o.primera_mayuscula(o.num_a_letras(total_gtq_report))" />
+                                </div>
+                            </div>
+                            <div class="col-2 text-right">
+                                <div style="font-zise: 25px">
+                                    <span t-out="total_gtq_report"
+                                        t-options="{'widget': 'monetary', 'display_currency': o.env['res.currency'].search([('name', '=', 'GTQ')], limit=1)}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

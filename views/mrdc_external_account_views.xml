@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View to add referencia_3 and duca fields -->
+    <record id="view_mrdc_external_account_form_inherit" model="ir.ui.view">
+        <field name="name">view.mrdc.external_account.form.inherit</field>
+        <field name="model">mrdc.external_account</field>
+        <field name="inherit_id" ref="mrdc_shipment_base.view_mrdc_external_account_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_2" position="after">
+                <field name="referencia_3"/>
+                <field name="duca"/>
+            </field>
+        </field>
+    </record>
+</odoo>

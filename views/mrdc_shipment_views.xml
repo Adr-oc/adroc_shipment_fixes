@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View to add freight_agency_id field -->
+    <record id="view_mrdc_shipment_form_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="delivery_observations" position="after">
+                <field name="freight_agency_id"/>
+                <field name="freight_agency_state" string="Estado de la Agencia de Carga"/>
+                <field name="freight_agency_state_detail" string="Detalle del Estado de la Agencia de Carga"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Form Views to add partner fields after tag_ids -->
+
+    <!-- mrdc_shipment_carrier form view -->
+    <record id="view_mrdc_shipment_form_inherit_carrier_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.carrier.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - Change DUCA label -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_duca" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.duca</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="customs_declaration_number" position="attributes">
+                <attribute name="string">DUCA</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - Add house_bl_awb_number after nave -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_house_bl" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.house.bl</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="nave" position="after">
+                <field name="house_bl_awb_number"/>
+                <field name="bl_awb_number" readonly="0"/>
+                <field name="bl_awb_number_manual" invisible="1"/>
+                <button name="action_reset_bl_manual_flag"
+                    type="object"
+                    string="Reactivar Sync BL/AWB"
+                    class="oe_link"
+                    invisible="bl_awb_number_manual == False"
+                    help="Permite que el BL/AWB vuelva a sincronizarse con sistemas externos"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person form view -->
+    <record id="view_mrdc_shipment_form_inherit_customs_broker_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.broker.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency form view -->
+    <record id="view_mrdc_shipment_form_inherit_freight_agency_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.freight.agency.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier form view -->
+    <record id="view_mrdc_shipment_form_inherit_good_carrier_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.good.carrier.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter form view -->
+    <record id="view_mrdc_shipment_form_inherit_importer_exporter_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.importer.exporter.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Form Views to add description field after ref_3 -->
+
+    <!-- mrdc_shipment_carrier form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_carrier_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.carrier.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_customs_broker_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.broker.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_freight_agency_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.freight.agency.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_good_carrier_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.good.carrier.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_importer_exporter_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.importer.exporter.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Tree Views - Standard order for all modules -->
+
+    <!-- mrdc_shipment_carrier tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_carrier" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.carrier</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="delivery_observations" string="Observaciones"/>
+
+                    <field name="carrier_state_detail" string="Detalle TR."/>
+                    <!-- <field name="house_bl_awb_number" string="HBL/AWB"/> -->
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+                    <!-- <field name="ref_3"/> -->
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string="Etiqueta"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_customs_agency" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.customs.agency</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="eta_updated" string="ETA"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="customs_agency_state_detail" string="Detalle AG."/>
+                    <field name="description"/>
+                    <field name="house_bl_awb_number" string="HBL/AWB"/>
+                    <field name="customs_declaration_number" string="DUCA"/>
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+                    <field name="ref_3"/>
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string="Etiqueta"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_customs_broker" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.customs.broker</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="freight_agency_state_detail"/>
+                    <field name="description"/>
+                    <field name="house_bl_awb_number"/>
+                    <field name="ref_2"/>
+                    <field name="ref_3"/>
+                    <field name="etd_updated"/>
+                    <field name="eta_updated"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_freight_agency" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.freight.agency</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="freight_agency_state_detail"/>
+                    <field name="description"/>
+                    <field name="house_bl_awb_number"/>
+                    <field name="ref_2"/>
+                    <field name="ref_3"/>
+                    <field name="etd_updated"/>
+                    <field name="eta_updated"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_good_carrier" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.good.carrier</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="customs_declaration_number" string="DUCA"/>
+                    <field name="delivery_observations" string="Observaciones"/>
+
+                    <field name="carrier_state_detail" string="Detalle TR."/>
+                    <!-- <field name="house_bl_awb_number" string="HBL/AWB"/> -->
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+                    <!-- <field name="ref_3"/> -->
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string="Etiqueta"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter tree view -->
+    <record id="view_mrdc_shipment_tree_inherit_importer_exporter" model="ir.ui.view">
+        <field name="name">mrdc.shipment.tree.inherit.importer.exporter</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list string="Embarques" create="true" edit="true">
+                    <field name="external_id"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="freight_agency_state_detail"/>
+                    <field name="description"/>
+                    <field name="house_bl_awb_number"/>
+                    <field name="ref_2"/>
+                    <field name="ref_3"/>
+                    <field name="etd_updated"/>
+                    <field name="eta_updated"/>
+                    <field name="aduana_select_id" string="Aduana"/>
+                    <field name="selectivo" widget="badge"
+                        decoration-success="selectivo == 'verde'"
+                        decoration-danger="selectivo == 'rojo'"/>
+
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="time_without_update"/>
+                    <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'in_transit'"
+                        decoration-success="state == 'delivered'"
+                        decoration-muted="state == 'cancelled'"/>
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Search Views to add filters -->
+
+    <!-- mrdc_shipment_carrier search view -->
+    <record id="view_mrdc_shipment_search_inherit_carrier" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.carrier</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency search view -->
+    <record id="view_mrdc_shipment_search_inherit_customs_agency" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.customs.agency</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person search view -->
+    <record id="view_mrdc_shipment_search_inherit_customs_broker" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.customs.broker</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency search view -->
+    <record id="view_mrdc_shipment_search_inherit_freight_agency" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.freight.agency</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier search view -->
+    <record id="view_mrdc_shipment_search_inherit_good_carrier" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.good.carrier</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter search view -->
+    <record id="view_mrdc_shipment_search_inherit_importer_exporter" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.importer.exporter</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_search"/>
+        <field name="arch" type="xml">
+            <field name="transport_type" position="before">
+                <field name="external_id" string="ID Externo"/>
+                <field name="name" string="Nombre"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="ref_1" string="Referencia 1"/>
+                <field name="ref_2" string="Referencia 2"/>
+                <field name="ref_3" string="Referencia 3"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+            </field>
+            <field name="transport_type" position="after">
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="En Tránsito" name="filter_in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Entregado" name="filter_delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+</odoo>

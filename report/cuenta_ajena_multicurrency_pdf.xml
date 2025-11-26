@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!-- Nuevo reporte de cuenta ajena con separación por monedas -->
+        <template id="cuenta_ajena_multicurrency_pdf">
+            <t t-call="web.basic_layout">
+                <link rel="stylesheet" href="/invoice_gt/static/src/css/ajustes_celda.css" />
+                <t t-foreach="docs" t-as="o">
+                    <!-- Verificar si tiene múltiples monedas en las líneas de factura -->
+                    <t t-set="currencies" t-value="o.invoice_line_ids.mapped('currency_id')"/>
+                    <t t-set="has_multiple" t-value="len(currencies) > 1"/>
+
+                    <t t-if="has_multiple">
+                        <!-- Hoja de Quetzales (GTQ) -->
+                        <t t-set="gtq_lines" t-value="o.invoice_line_ids.filtered(lambda l: l.currency_id.name == 'GTQ')"/>
+                        <t t-if="len(gtq_lines) > 0">
+                            <div class="page">
+                                <div class="d-flex">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6 encabezado">
+                                        <div>LQuetzales</div>
+                                        <div><span t-out="o.name" /></div>
+                                    </div>
+                                    <div class="col-3">
+                                    </div>
+                                </div>
+                                <div class="derecha">
+                                    <span t-out="o.current_date_format(o.date)" />
+                                </div>
+                                <div class="d-flex datos_cliente">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-8">
+                                        <div>
+                                            <span t-out="o.partner_id.name" />
+                                        </div>
+                                        <div>
+                                            <span t-out="o.partner_id.street" />
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="col-4">
+                                                <span t-out="o.partner_id.vat" />
+                                            </div>
+                                            <div class="col-4">
+                                                <span t-out="o.duca" />
+                                            </div>
+                                            <div class="col-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                    </div>
+                                </div>
+                                <div>
+                                    <t t-foreach="gtq_lines" t-as="linea">
+                                        <div class="d-flex">
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="linea.quantity" />
+                                            </div>
+                                            <div class="col-4">
+                                                <span t-out="linea.name" />
+                                            </div>
+                                            <div class="col-1">
+                                                <span t-out="linea.currency_id.name" />
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="'{0:,.2f}'.format(linea.price_unit)" />
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="'{0:,.2f}'.format(linea.price_subtotal)" />
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.referencia_1" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.referencia_3" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.duca" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.bl" />
+                                        </div>
+                                        <div style="margin-left: 70px; margin-top: 20px;">
+                                            <span t-out="o.primera_mayuscula(o.num_a_letras(sum(gtq_lines.mapped('price_subtotal'))))" />
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <div style="font-zise: 25px">
+                                            <span t-out="sum(gtq_lines.mapped('price_subtotal'))"
+                                                t-options="{'widget': 'monetary', 'display_currency': o.env['res.currency'].search([('name', '=', 'GTQ')], limit=1)}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- Hoja de Dólares (USD) -->
+                        <t t-set="usd_lines" t-value="o.invoice_line_ids.filtered(lambda l: l.currency_id.name == 'USD')"/>
+                        <t t-if="len(usd_lines) > 0">
+                            <div class="page">
+                                <div class="d-flex">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6 encabezado">
+                                        <div>LDolares</div>
+                                        <div><span t-out="o.name" /></div>
+                                    </div>
+                                    <div class="col-3">
+                                    </div>
+                                </div>
+                                <div class="derecha">
+                                    <span t-out="o.current_date_format(o.date)" />
+                                </div>
+                                <div class="d-flex datos_cliente">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-8">
+                                        <div>
+                                            <span t-out="o.partner_id.name" />
+                                        </div>
+                                        <div>
+                                            <span t-out="o.partner_id.street" />
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="col-4">
+                                                <span t-out="o.partner_id.vat" />
+                                            </div>
+                                            <div class="col-4">
+                                                <span t-out="o.duca" />
+                                            </div>
+                                            <div class="col-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                    </div>
+                                </div>
+                                <div>
+                                    <t t-foreach="usd_lines" t-as="linea">
+                                        <div class="d-flex">
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="linea.quantity" />
+                                            </div>
+                                            <div class="col-4">
+                                                <span t-out="linea.name" />
+                                            </div>
+                                            <div class="col-1">
+                                                <span t-out="linea.currency_id.name" />
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="'{0:,.2f}'.format(linea.price_unit)" />
+                                            </div>
+                                            <div class="col-2">
+                                                <span t-out="'{0:,.2f}'.format(linea.price_subtotal)" />
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.referencia_1" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.referencia_3" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.duca" />
+                                        </div>
+                                        <div style="margin-left: 70px;">
+                                            <span t-out="o.bl" />
+                                        </div>
+                                        <div style="margin-left: 70px; margin-top: 20px;">
+                                            <span t-out="o.primera_mayuscula(o.num_a_letras(sum(usd_lines.mapped('price_subtotal'))))" />
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <div style="font-zise: 25px">
+                                            <span t-out="sum(usd_lines.mapped('price_subtotal'))"
+                                                t-options="{'widget': 'monetary', 'display_currency': o.env['res.currency'].search([('name', '=', 'USD')], limit=1)}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+
+                    <!-- Si solo tiene una moneda, mostrar el comportamiento original -->
+                    <t t-if="not has_multiple">
+                        <div class="page">
+                            <div class="d-flex">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-6 encabezado">
+                                    <t t-if="o.currency_id.name == 'USD'">
+                                        <div>LDolares</div>
+                                    </t>
+                                    <t t-else="">
+                                        <div>LQuetzales</div>
+                                    </t>
+                                    <div><span t-out="o.name" /></div>
+                                </div>
+                                <div class="col-3">
+                                </div>
+                            </div>
+                            <div class="derecha">
+                                <span t-out="o.current_date_format(o.date)" />
+                            </div>
+                            <div class="d-flex datos_cliente">
+                                <div class="col-2">
+                                </div>
+                                <div class="col-8">
+                                    <div>
+                                        <span t-out="o.partner_id.name" />
+                                    </div>
+                                    <div>
+                                        <span t-out="o.partner_id.street" />
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-4">
+                                            <span t-out="o.partner_id.vat" />
+                                        </div>
+                                        <div class="col-4">
+                                            <span t-out="o.duca" />
+                                        </div>
+                                        <div class="col-4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                </div>
+                            </div>
+                            <div>
+                                <t t-foreach="o.invoice_line_ids" t-as="linea">
+                                    <div class="d-flex">
+                                        <div class="col-1">
+                                        </div>
+                                        <div class="col-2">
+                                            <span t-out="linea.quantity" />
+                                        </div>
+                                        <div class="col-4">
+                                            <span t-out="linea.name" />
+                                        </div>
+                                        <div class="col-1">
+                                            <span t-out="o.currency_id.name" />
+                                        </div>
+                                        <div class="col-2">
+                                            <span t-out="'{0:,.2f}'.format(linea.price_unit)" />
+                                        </div>
+                                        <div class="col-2">
+                                            <span t-out="'{0:,.2f}'.format(linea.price_subtotal)" />
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div style="margin-left: 70px;">
+                                        <span t-out="o.referencia_1" />
+                                    </div>
+                                    <div style="margin-left: 70px;">
+                                        <span t-out="o.referencia_3" />
+                                    </div>
+                                    <div style="margin-left: 70px;">
+                                        <span t-out="o.duca" />
+                                    </div>
+                                    <div style="margin-left: 70px;">
+                                        <span t-out="o.bl" />
+                                    </div>
+                                    <div style="margin-left: 70px; margin-top: 20px;">
+                                        <span t-out="o.primera_mayuscula(o.num_a_letras(o.amount_total))" />
+                                    </div>
+                                </div>
+                                <div class="col-2 text-right">
+                                    <div style="font-zise: 25px">
+                                        <span t-out="o.amount_total"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
