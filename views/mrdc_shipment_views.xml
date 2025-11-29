@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View to add freight_agency_id field -->
+    <record id="view_mrdc_shipment_form_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="delivery_observations" position="after">
+                <field name="freight_agency_id"/>
+                <field name="freight_agency_state" string="Estado de la Agencia de Carga"/>
+                <field name="freight_agency_state_detail" string="Detalle del Estado de la Agencia de Carga"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Form Views to add partner fields after tag_ids -->
+
+    <!-- mrdc_shipment_carrier form view -->
+    <record id="view_mrdc_shipment_form_inherit_carrier_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.carrier.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - Change DUCA label -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_duca" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.duca</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="customs_declaration_number" position="attributes">
+                <attribute name="string">DUCA</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - Add house_bl_awb_number after nave -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_house_bl" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.house.bl</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="nave" position="after">
+                <field name="house_bl_awb_number"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - Add bl_awb_number and bl_awb_number_manual after house_bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="house_bl_awb_number" position="after">
+                <field name="bl_awb_number" readonly="1"/>
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_carrier form view - Add bl_awb_number and bl_awb_number_manual after house_bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_carrier_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.carrier.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="house_bl_awb_number" position="after">
+                <field name="bl_awb_number" readonly="1"/>
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency form view - Add bl_awb_number and bl_awb_number_manual after house_bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_freight_agency_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.freight.agency.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="house_bl_awb_number" position="after">
+                <field name="bl_awb_number" readonly="1"/>
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person form view - Add bl_awb_number and bl_awb_number_manual after house_bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_customs_broker_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.broker.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="house_bl_awb_number" position="after">
+                <field name="bl_awb_number" readonly="1"/>
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person form view -->
+    <record id="view_mrdc_shipment_form_inherit_customs_broker_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.broker.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency form view -->
+    <record id="view_mrdc_shipment_form_inherit_freight_agency_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.freight.agency.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier form view - Add bl_awb_number_manual after bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_good_carrier_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.good.carrier.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="bl_awb_number" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="bl_awb_number" position="after">
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier form view -->
+    <record id="view_mrdc_shipment_form_inherit_good_carrier_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.good.carrier.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="tradlinx_carrier_id" readonly="1"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter form view - Add bl_awb_number and bl_awb_number_manual after house_bl_awb_number -->
+    <record id="view_mrdc_shipment_form_inherit_importer_exporter_bl_manual" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.importer.exporter.bl.manual</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="house_bl_awb_number" position="after">
+                <field name="bl_awb_number" readonly="1"/>
+                <field name="bl_awb_number_manual" placeholder="Ingrese BL/AWB manual si es necesario"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter form view -->
+    <record id="view_mrdc_shipment_form_inherit_importer_exporter_partners" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.importer.exporter.partners</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="aduana_select_id"/>
+                <field name="selectivo"/>
+                <field name="consignee_id"/>
+                <field name="nave"/>
+                <field name="shipper_id"/>
+                <field name="notify_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Form Views to add description field after ref_3 -->
+
+    <!-- mrdc_shipment_carrier form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_carrier_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.carrier.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_agency form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_customs_agency_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.agency.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_customs_broker_person form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_customs_broker_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.customs.broker.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_broker_person.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_freight_agency form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_freight_agency_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.freight.agency.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_good_carrier form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_good_carrier_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.good.carrier.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_3" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- mrdc_shipment_importer_exporter form view - description -->
+    <record id="view_mrdc_shipment_form_inherit_importer_exporter_description" model="ir.ui.view">
+        <field name="name">mrdc.shipment.form.inherit.importer.exporter.description</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_importer_exporter.view_mrdc_shipment_form"/>
+        <field name="arch" type="xml">
+            <field name="ref_1" position="after">
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Base Search View to add all common search fields -->
+    <record id="view_mrdc_shipment_search_inherit_fixes" model="ir.ui.view">
+        <field name="name">mrdc.shipment.search.inherit.fixes</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_base.view_mrdc_shipment_base_search"/>
+        <field name="arch" type="xml">
+            <!-- Add search fields -->
+            <xpath expr="//search" position="inside">
+                <field name="external_id" string="ID Externo"/>
+                <field name="consignee_id" string="Consignatario"/>
+                <field name="shipper_id" string="Shipper"/>
+                <field name="notify_id" string="Notificador"/>
+                <field name="customs_declaration_number" string="DUCA"/>
+                <field name="bl_awb_number" string="Número de BL/AWB"/>
+                <field name="bl_awb_number_manual" string="BL/AWB Manual"/>
+                <field name="house_bl_awb_number" string="Número de House BL/AWB"/>
+                <field name="nave" string="Nave"/>
+                <field name="selectivo" string="Selectivo"/>
+                <field name="description" string="Descripción"/>
+                <field name="tag_ids" string="Etiqueta"/>
+                <field name="carrier_state_detail" string="Detalle Carrier"/>
+                <field name="customs_agency_state_detail" string="Detalle Agencia Aduanal"/>
+                <field name="customs_broker_person_state_detail" string="Detalle Agente Aduanal"/>
+                <field name="freight_agency_state_detail" string="Detalle Agencia de Carga"/>
+                <field name="good_carrier_state_detail" string="Detalle Transportista"/>
+                <field name="importer_exporter_state_detail" string="Detalle Importador/Exportador"/>
+
+                <!-- Add state filters -->
+                <separator/>
+                <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Cancelado" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mrdc_shipment_customs_agency.view_mrdc_shipment_list_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.list.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_customs_agency.view_mrdc_shipment_list"/>
+        <field name="arch" type="xml">
+            <field name="external_id" position="after">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="eta_updated"/>
+                    <field name="aduana_select_id"/>
+                    <field name="customs_agency_state_detail"/>
+                    <field name="description"/>
+                    <field name="bl_awb_number_manual"/>
+                    <field name="customs_declaration_number"/>
+                    <field name="selectivo"/>
+                    <field name="ref_3"/>
+                    <field name="tag_ids"/>
+                    <field name="time_from_eta_updated"/>
+                    <field name="time_without_update"/>
+                    <field name="state"/>
+                    <field name="invoice_state"/>
+            </field>
+            <!-- Hide fields that already exist in base view -->
+            <field name="importer_exporter_state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="importer_exporter_state_detail" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_1" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="transport_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="commercial_value_usd" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="gross_weight_kg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="volume_m3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="etd_updated" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_mrdc_shipment_freight_agency.view_mrdc_shipment_list_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.list.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_freight_agency.view_mrdc_shipment_list"/>
+        <field name="arch" type="xml">
+            <field list="external_id" position="after">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="aduana_select_id"/>
+                <field name="freight_agency_state"/>
+                <field name="freight_agency_state_detail"/>
+                <field name="bl_awb_number_manual"/>
+                <field name="customs_declaration_number"/>
+                <field name="eta_updated"/>
+                <field name="selectivo"/>
+                <field name="tag_ids"/>
+                <field name="time_from_eta_updated"/>
+                <field name="time_without_update"/>
+                <field name="state"/>
+                <field name="invoice_state"/>
+            </field>
+            <!-- Hide fields that already exist in base view -->
+            <field name="ref_1" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_2" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="transport_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="commercial_value_usd" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="gross_weight_kg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="volume_m3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="etd_updated" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="delivery_datetime_actual" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrdc_shipment_carrier.view_mrdc_shipment_list_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.list.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_carrier.view_mrdc_shipment_list"/>
+        <field name="arch" type="xml">
+            <field name="external_id" position="after">
+                <field name="name"/>
+                <field name="vessel_flight_name"/>
+                <field name="partner_id"/>
+                <field name="freight_agency_state"/>
+                <field name="freight_agency_state_detail"/>
+                <field name="bl_awb_number_manual"/>
+                <field name="ref_3"/>
+                <field name="etd_updated"/>
+                <field name="eta_updated"/>
+                <field name="tag_ids"/>
+                <field name="time_from_eta_updated"/>
+                <field name="time_without_update"/>
+                <field name="state"/>
+                <field name="invoice_state"/>
+            </field>
+            <!-- Hide fields that already exist in base view -->
+            <field name="freight_agency_state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="freight_agency_state_detail" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_1" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_2" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="transport_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="commercial_value_usd" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="gross_weight_kg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="volume_m3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="etd_updated" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="delivery_datetime_actual" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="last_update_date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="mrdc_shipment_good_carrier.view_mrdc_shipment_list_inherit" model="ir.ui.view">
+        <field name="name">mrdc.shipment.list.inherit</field>
+        <field name="model">mrdc.shipment</field>
+        <field name="inherit_id" ref="mrdc_shipment_good_carrier.view_mrdc_shipment_list"/>
+        <field name="arch" type="xml">
+            <field name="external_id" position="after">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="good_carrier_state"/>
+                <field name="good_carrier_state_detail"/>
+                <field name="customs_declaration_number"/>
+                <field name="ref_2"/>
+                <field name="ref_3"/>
+                <field name="eta_updated"/>
+                <field name="time_from_eta_updated"/>
+                <field name="time_without_update"/>
+                <field name="tag_ids"/>
+                <field name="state"/>
+                <field name="invoice_state"/>
+            </field>
+            <!-- Hide fields that already exist in base view -->
+            <field name="freight_agency_state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="freight_agency_state_detail" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_1" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_2" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="ref_3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="transport_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="gross_weight_kg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="volume_m3" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="etd_updated" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="eta_updated" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="delivery_datetime_actual" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
