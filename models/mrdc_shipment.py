@@ -291,7 +291,7 @@ class MrdcShipment(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Facturas de Cliente',
             'res_model': 'account.move',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [
                 ('mrdc_shipment_id', '=', self.id),
                 ('move_type', 'in', ['out_invoice', 'out_refund'])
@@ -316,7 +316,7 @@ class MrdcShipment(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Facturas de Proveedor',
             'res_model': 'account.move',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [
                 ('mrdc_shipment_id', '=', self.id),
                 ('move_type', 'in', ['in_invoice', 'in_refund'])
