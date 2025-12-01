@@ -213,13 +213,15 @@ class MrdcShipment(models.Model):
         tracking=True
     )
 
-    # Campo para controlar si bl_awb_number fue editado manualmente
-    bl_awb_number_manual = fields.Boolean(
-        string='BL/AWB Editado Manualmente',
-        default=False,
-        help='Indica si el campo BL/AWB fue editado manualmente y no debe sincronizarse.',
+    bl_awb_number_manual = fields.Char(
+        string='BL/AWB Manual',
+        help='Campo de texto libre para ingresar manualmente un número de BL/AWB alternativo.',
+        tracking=True,
         copy=False
     )
+
+    property_payment_term_id = fields.Many2one("account.payment.term"
+    , related="partner_id.property_payment_term_id", string="Término de pago", tracking=True, store=True, readonly=False)
 
     def _get_fields_to_sync(self):
         """
@@ -228,23 +230,13 @@ class MrdcShipment(models.Model):
         """
         fields_to_sync = super()._get_fields_to_sync()
 
-        # Excluir bl_awb_number de la sincronización si fue editado manualmente
-        if self.bl_awb_number_manual and 'bl_awb_number' in fields_to_sync:
-            fields_to_sync.remove('bl_awb_number')
-
         fields_to_sync.extend([
-            # Partner string fields (NOT Many2one to avoid country_id issues)
-            'consignee_name',
-            'consignee_vat',
-            'shipper_name',
-            'shipper_vat',
-            'notify_name',
-            'notify_vat',
-            # Selectivo field
+            # Partner string fields (NOT Many2one to avoid issues)
+            'consignee_name', 'consignee_vat',
+            'shipper_name', 'shipper_vat',
+            'notify_name', 'notify_vat',
             'selectivo',
-            # Aduana field
             'aduana_select_id',
-            # Nave field
             'nave',
         ])
         return fields_to_sync
