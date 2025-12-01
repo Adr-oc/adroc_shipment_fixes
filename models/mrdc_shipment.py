@@ -220,8 +220,14 @@ class MrdcShipment(models.Model):
         copy=False
     )
 
-    property_payment_term_id = fields.Many2one("account.payment.term"
-    , related="partner_id.property_payment_term_id", string="Término de pago", tracking=True, store=True, readonly=False)
+    # En Odoo 17+ los campos company_dependent se almacenan como JSONB
+    # No se puede usar store=True con campos related a company_dependent
+    property_payment_term_id = fields.Many2one(
+        "account.payment.term",
+        related="partner_id.property_payment_term_id",
+        string="Término de pago",
+        readonly=False,
+    )
 
     def _get_fields_to_sync(self):
         """
