@@ -33,7 +33,7 @@
     "data": [
         "security/ir.model.access.csv",
         "data/mrdc_aduana_data.xml",
-        # "views/mrdc_shipment_views.xml",  # Commented out - views with inheritance issues
+        "views/mrdc_shipment_views.xml",
         # "views/account_move_views.xml",  # Commented out - missing fields in account.move
         "views/mrdc_external_account_views.xml",
     ],
