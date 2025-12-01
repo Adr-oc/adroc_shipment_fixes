@@ -34,8 +34,15 @@
         "security/ir.model.access.csv",
         "data/mrdc_aduana_data.xml",
         "views/mrdc_shipment_views.xml",
-        # "views/account_move_views.xml",  # Commented out - missing fields in account.move
+        "views/account_move_views.xml",
         "views/mrdc_external_account_views.xml",
+        # Reportes multimoneda
+        "report/cuenta_ajena_multicurrency_report.xml",
+        "report/cuenta_ajena_multicurrency_pdf.xml",
+        "report/mrdc_external_account_gtq_report.xml",
+        "report/mrdc_external_account_pdf.xml",
+        "report/mrdc_external_account_usd_report.xml",
+        "report/mrdc_external_account_usd_pdf.xml",
     ],
 
     'license': 'OPL-1',
