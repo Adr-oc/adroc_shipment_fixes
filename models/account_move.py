@@ -46,6 +46,10 @@ class AccountMove(models.Model):
             # Get values from context
             ctx = self.env.context
 
+            # Assign partner_id from context if provided
+            if 'partner_id' not in vals and ctx.get('default_partner_id'):
+                vals['partner_id'] = ctx.get('default_partner_id')
+            
             # Assign referencia fields from context if provided
             if 'referencia_1' not in vals and ctx.get('default_referencia_1'):
                 vals['referencia_1'] = ctx.get('default_referencia_1')
