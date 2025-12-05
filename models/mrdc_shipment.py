@@ -299,7 +299,7 @@ class MrdcShipment(models.Model):
             'context': {
                 'default_mrdc_shipment_id': self.id,
                 'default_move_type': 'out_invoice',
-                'default_partner_id': self.partner_id,
+                'default_partner_id': self.partner_id.id,
                 'default_referencia_1': self.ref_1,
                 'default_referencia_2': self.ref_2,
                 'default_referencia_3': self.ref_3,
