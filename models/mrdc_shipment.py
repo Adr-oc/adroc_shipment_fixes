@@ -156,6 +156,7 @@ class MrdcShipment(models.Model):
             ('CF1', 'Centro de Integración Familiar'),
             ('PN1', 'Sociedad Protectora del Niño (Puerto Libre)'),
             ('VP1', 'Asociación Señoras Caridad San Vicente Paúl'),
+            ('ZF', 'Zona Franca Zeta la unión'),
         ],
         string='Aduana',
         help='Aduana relacionada con el embarque.',
